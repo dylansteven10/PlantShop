@@ -73,13 +73,23 @@ main, section {
 
 /* Home (landing) */
 .hero {
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - 56px); /* Ocupa toda la altura de la ventana menos la cabecera */
   display: grid;
   place-items: center;
   text-align: center;
-  padding: 40px 16px;
-  background: url('https://picsum.photos/seed/green/1600/900') center/cover no-repeat fixed;
+  padding: 2rem; /* Espaciado interno controlado */
+  background: url('https://static.vecteezy.com/system/resources/previews/001/952/567/non_2x/tropical-plant-with-light-green-background-free-vector.jpg') 
+              center / cover no-repeat;
 }
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
+  .hero {
+    padding: 1rem;
+    background-attachment: scroll; /* Evita problemas en móviles con fondo fijo */
+  }
+}
+
 .hero-card {
   background: rgba(255,255,255,.9);
   backdrop-filter: blur(2px);
