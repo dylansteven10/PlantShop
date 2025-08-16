@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { incrementQty, decrementQty, removeFromCart, clearCart } from '../redux/slices/cartSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // <-- añadimos useNavigate
 
 const money = (n) => n.toLocaleString('es-CO', { style: 'currency', currency: 'USD' });
 
@@ -9,6 +9,18 @@ export default function Cart() {
   const items = useSelector(state => state.cart.items);
   const totalItems = items.reduce((s, i) => s + i.qty, 0);
   const totalPrice = items.reduce((s, i) => s + i.qty * i.price, 0);
+
+  // --- NUEVO: estado del usuario y navegación
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    if (!user) {
+      navigate("/login"); // redirige si no está logueado
+    } else {
+      alert("Proceso de pago (próximamente)");
+    }
+  };
 
   return (
     <main>
@@ -64,7 +76,8 @@ export default function Cart() {
           </div>
 
           <div className="actions">
-            <button className="btn btn-outline" onClick={() => alert('Próximamente')}>Pagar</button>
+            {/* BOTÓN MODIFICADO PARA CHECKOUT */}
+            <button className="btn btn-outline" onClick={handleCheckout}>Pagar</button>
             <Link className="btn" to="/products">Seguir comprando</Link>
             <button className="btn btn-outline" onClick={() => dispatch(clearCart())}>Vaciar carrito</button>
           </div>
